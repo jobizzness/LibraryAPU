@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Guest {
 	
-	public int response;
+	public String response;
 	
 	public Guest(){
 		
@@ -11,15 +11,19 @@ public class Guest {
 		this.showOptions();
 		this.handleResponse(scanner);
 	}
-
+	
+	/**
+	 * 
+	 * @param scanner
+	 */
 	private void handleResponse(Scanner scanner) {
-		this.response = scanner.nextInt();
+		this.response = scanner.nextLine();
 		
-		if(this.response == 0){
+		if(this.response.equalsIgnoreCase("0")){
 			this.SearchBookOptions(scanner);
 			return;
 		}
-		if(this.response == 1){
+		if(this.response.equalsIgnoreCase("1")){
 			this.ViewBookOptions(scanner);
 			return;
 		}
@@ -27,26 +31,41 @@ public class Guest {
 		System.out.println("Sorry you may have entered a wrong function.");
 	}
 
+	/**
+	 * 
+	 * @param scanner
+	 */
 	private void ViewBookOptions(Scanner scanner) {
 		System.out.println("Please enter BookID");
 		
-		String bookID = scanner.next();
+		String bookID = scanner.nextLine();
 		Book.view(bookID);
 		
 	}
 
+	/**
+	 * 
+	 * @param scanner
+	 */
 	private void SearchBookOptions(Scanner scanner) {
 		System.out.println("Please Enter Book Name");
-		String bookName = scanner.next();
-		Book.search(bookName);
+		String bookName = scanner.nextLine();
+		Book book = Book.search(bookName);
 		
+		if(book != null){
+			book.display();
+			return;
+		}
 		
+		System.out.println("Sorry no results found");
 	}
-
+	
+	/**
+	 * 
+	 */
 	private void showOptions() {
 		System.out.println("Enter 0 to search a book.");
 		System.out.println("Enter 1 to view book details.");
-		
 	}
 
 

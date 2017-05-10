@@ -1,6 +1,9 @@
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 public class User {
 	
@@ -134,7 +137,21 @@ public class User {
 		File f = new File(userFile);
 		
 		if(f.exists() == false){
-			f.mkdirs();
+			try {
+				PrintWriter writer = new PrintWriter(userFile, "UTF-8");
+				writer.println("id-username password-first_name-last_name-role-first_login-");
+				writer.println("Schema!! Schema!! Schema!! Schema!! Schema!! Schema!! Schema!!");
+				writer.println("-------------------------------------------------------------------------------------------");
+				writer.close();
+				f = User.getFile();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		return f;
 	}

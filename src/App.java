@@ -11,7 +11,7 @@ public class App {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("=========== Welcome to Knowledgica Public Libary ===========");
+		System.out.println("----- Welcome to Knowledgica Public Libary -----");
 		System.out.println("Please enter 0 if you are a Guest");
 		System.out.println("Please enter 1 if you are a Staff");
 		
