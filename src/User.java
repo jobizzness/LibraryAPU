@@ -4,24 +4,25 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 public class User {
 	
 	public String username;
-	private String password;
+	protected String password;
 	public String role;
-	public String fname;
-	public String lname;
-	private String ID;
-	private FileSystem filesystem;
-	private String firstname;
-	private String lastname;
+	public String ID;
+	public FileSystem filesystem;
+	public String firstname;
+	public String lastname;
+	public Scanner scanner;
+	public String response;
 	
 	//Location where our text file will be stored
-	private final static String userFile = "user.txt";
+	protected final static String userFile = "user.txt";
 	
 	/**
-	 * 
+	 * creates a new user
 	 * @param username
 	 * @param password
 	 */
@@ -30,9 +31,19 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.ID = generateID();
+		this.scanner = new Scanner(System.in);
+		this.showOptions();
+
 	}
 	
+	public User(){
+		this.scanner = new Scanner(System.in);
+		this.showOptions();
+	}
+	
+	
 	/**
+	 * recreates an extisting user
 	 * @Override the constructor
 	 * @param id
 	 * @param username
@@ -47,8 +58,10 @@ public class User {
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.role = role;		
+		this.role = role;
+		this.scanner = new Scanner(System.in);
 	}
+	
 
 	private String generateID() {
 		// TODO Auto-generated method stub
@@ -97,7 +110,7 @@ public class User {
 				
 				if(record != ""){
 					
-					String[] userData = record.split("-");
+					String[] userData = record.split("----");
 					
 					String id = userData[0];
 					String firstname = userData[2];
@@ -122,10 +135,11 @@ public class User {
 	 * @return
 	 * @throws IOException
 	 */
-	private static String findBy(String word) throws IOException {
+	public static String findBy(String word) throws IOException {
 		
 		return FileSystem.find(User.getFile(), word);
 	}
+	
 	
 	/**
 	 * Returns the file if it exits and if it dosent we create a new one.
@@ -154,5 +168,90 @@ public class User {
 
 		}
 		return f;
+	}
+	
+	public void searchBook() {
+
+		System.out.println("Enter book Title");
+		
+		String title = this.scanner.nextLine();
+		
+		Book book = Book.viewBy(title);
+		
+		if(book != null){
+			
+			System.out.println("Book Found:");
+			System.out.println("---------------------------------");
+			System.out.println("Title: "+ book.title);
+			System.out.println("Availability: "+ book.availability);
+			System.out.println("Author: "+ book.author);
+			System.out.println("Shelf Location: "+ book.shelve_no);
+			this.showOptions();
+			return;
+		}
+		System.out.println("Sorry No result Found");
+		System.out.println("---------------------------------");
+		this.showOptions();
+	}
+
+	/**
+	 * 
+	 */
+	public void showOptions() {
+		System.out.println("Enter 0 to search a book.");
+		System.out.println("Enter 1 to view a book.");
+		System.out.println("Enter 2 to go back.");
+		
+		this.response = this.scanner.nextLine();
+		
+		switch(this.response){
+			case "0":
+				this.searchBook();
+				break;
+			case "1":
+				this.viewBook();
+				break;
+			case "2":
+				this.goBack();
+				break;
+				default:
+				System.out.println("Sorry you may have entered a wrong function.");
+		}
+	
+	}
+	
+	public void viewBook() {
+		
+		System.out.println("Enter book ID");
+		
+		String ID = this.scanner.nextLine();
+		
+		Book book = Book.viewBy(ID);
+		
+		if(book != null){
+			
+			System.out.println("---------------------------------");
+			System.out.println("Title: "+ book.title);
+			System.out.println("Availability: "+ book.availability);
+			System.out.println("Author: "+ book.author);
+			System.out.println("Shelf Location: "+ book.shelve_no);
+			this.showOptions();
+			return;
+		}
+		
+		System.out.println("Sorry Book was not found");
+		System.out.println("---------------------------------");
+		this.showOptions();
+		
+		
+	}
+	
+	protected void goBack() {
+		/**
+		 * Instantiate main app class
+		 */
+		new App().kickstart();
+
+		
 	}
 }

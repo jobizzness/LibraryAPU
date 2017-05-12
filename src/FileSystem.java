@@ -63,10 +63,10 @@ public class FileSystem {
 		 String line = br.readLine();
          while(line != null)
          {
-             String[] wordsinLine = line.split("-");
+             String[] wordsinLine = line.split("----");
              
              	for (String wordfound: wordsinLine){
-             		if(wordfound.equals(word)){
+             		if(wordfound.equalsIgnoreCase(word)){
              			return line;
              		}
              	}
@@ -87,10 +87,6 @@ public class FileSystem {
 		
 		URI location = file.toURI(); 
 		
-		System.out.println(oldObject.toString());
-		
-		System.out.println(newObject.toString());
-		
 		List<String> newLines = new ArrayList<>();
 		for (String line : Files.readAllLines(Paths.get(location), StandardCharsets.UTF_8)) {
 		    if (line.contains(oldObject.toString())) {
@@ -109,30 +105,33 @@ public class FileSystem {
 	public static boolean removeObject(File file, Object object) throws IOException
     {
 
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            List<String> linestoadd = new ArrayList<String>();
-            while(br.ready())
-            {
-                String line = br.readLine();
-                if(!line.trim().equals(object.toString()))
-                {
-                    linestoadd.add(line.trim());
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            br.close();
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            for(String linetoadd : linestoadd)  
-            {
-                pw.println(linetoadd);
-            }
-            pw.close();
-            return true;      
+		URI location = file.toURI(); 
+		
+		List<String> newLines = new ArrayList<>();
+		for (String line : Files.readAllLines(Paths.get(location), StandardCharsets.UTF_8)) {
+		    if (line.contains(object.toString())) {
+		       newLines.add(line.replace(object.toString(), ""));
+		    } else {
+		       newLines.add(line);
+		    }
+		}
+		Files.write(Paths.get(location), newLines, StandardCharsets.UTF_8);
+		return false;
 
 
     }
+	
+	 public static ArrayList<String> getContents(File file) throws IOException
+	    {
+	        ArrayList<String> contents = new ArrayList<String>();
+
+	            BufferedReader br = new BufferedReader(new FileReader(file));
+	            while(br.ready())
+	            {
+	                contents.add(br.readLine());
+	            }
+	            br.close();
+	        
+	        return contents;
+	    }
 }

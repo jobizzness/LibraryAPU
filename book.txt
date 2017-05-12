@@ -1,5 +1,10 @@
 id-title-availability-author-shelve_no
 Schema!! Schema!! Schema!! Schema!! Schema!! Schema!! Schema!!
 -------------------------------------------------------------------------------------------
-0-cool stuff-true-ladyboy-CG8JD
-1-ring guy-true-cool guy-CEDJF
+0----Lolita----true----Vladimir Nabokov----1554
+1----Good Omens----false----Terry Pratchett----1456
+2----The Silmarillion----true----J. R. R. Tolkien----1332
+3----The Kite Runner----true----Khaled Hosseini----1569
+4----Water for Elephants----true----Sara Gruen----1112
+5----Moby Dick----true----Herman Melville----56784
+6----Harry Potter----true----Herman Melville----56344

@@ -21,7 +21,7 @@ public class App {
 		 * This fires if the user is a guest
 		 */
 		if(this.response == 0){
-			Guest guest = new Guest();
+			new Guest();
 			return;
 		}
 		

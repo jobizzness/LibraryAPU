@@ -10,12 +10,11 @@ public class AuthMiddleware {
 		System.out.println("----- Welcome ------ \n");
 		
 		if(userIsAdmin()){
-			AdminPanel panel = new AdminPanel(user);
+			 new Admin(user);
 			return;
 		}
 		
-		LibrarianPanel panel = new LibrarianPanel(user);
-		//send to librarian panel
+		 new Librarian(user);
 		
 	}
 

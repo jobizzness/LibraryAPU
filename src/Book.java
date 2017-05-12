@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class Book {
 
@@ -31,15 +32,11 @@ public class Book {
 		this.author = author;
 		this.shelve_no = shelve_no;
 	}
-	
-	public static void view(String nextLine) {
-		System.out.println("You are viewing the Book " + nextLine);
-		
-	}
+
 	
 	public String toString(){
 
-		return this.id+ "-" + this.title + "-"+ this.availability + "-"+ this.author + "-"+ this.shelve_no;
+		return this.id+ "----" + this.title + "----"+ this.availability + "----"+ this.author + "----"+ this.shelve_no;
 	}
 
 	/**
@@ -54,7 +51,7 @@ public class Book {
 			
 			
 			if(record != ""){
-				String[] data = record.split("-");
+				String[] data = record.split("----");
 				
 				String id = data[0];
 				String title = data[1];
@@ -71,6 +68,49 @@ public class Book {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+	
+	public static void reportAll() {
+	
+		try {
+			
+			ArrayList<String> records = FileSystem.getContents(Book.getFile());
+			
+			for(String record : records){
+				System.out.println(record);
+			}
+
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+
+	}
+	public static Book viewBy(String id){
+
+		try {
+			
+			String record = FileSystem.find(Book.getFile(), id);
+			
+			if(record != ""){
+				String[] data = record.split("----");
+				
+				String title = data[1];
+				Boolean availability = Boolean.valueOf(data[2]);
+				String author = data[3];
+				String shelve_no = data[4];
+				
+				return new Book(id, title, availability, author, shelve_no);
+			}
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
@@ -101,11 +141,6 @@ public class Book {
 
 		}
 		return f;
-	}
-
-	public void display() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
